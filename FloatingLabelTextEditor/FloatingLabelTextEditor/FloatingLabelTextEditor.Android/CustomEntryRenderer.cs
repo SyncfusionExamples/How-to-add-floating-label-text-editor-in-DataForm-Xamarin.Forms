@@ -64,8 +64,6 @@ namespace FloatingLabelTextEditor.Droid
 
                 SetBorder((e.NewElement as CustomEntry).BottomBorderColor.ToAndroid());
 
-                var nativeEditText = Control.EditText;
-
                 Control.EditText.TextChanged += EditTextOnTextChanged;
                 Control.EditText.KeyPress += EditTextOnKeyPress;
             }
@@ -83,10 +81,6 @@ namespace FloatingLabelTextEditor.Droid
                     manager.ShowSoftInput(EditText, 0);
                 },
                     100);
-            }
-            else
-            {
-                CustomEntry.SfDataForm.Validate("Name");
             }
         }
 
@@ -128,11 +122,6 @@ namespace FloatingLabelTextEditor.Droid
             {
                 SetKeyboard();
             }
-        }
-        private void ElementOnHideKeyboard(object sender, EventArgs eventArgs)
-        {
-            var manager = (InputMethodManager)Android.App.Application.Context.GetSystemService(Context.InputMethodService);
-            manager.HideSoftInputFromWindow(Control.EditText.WindowToken, 0);
         }
 
         private void SetIsPassword()
@@ -199,35 +188,8 @@ namespace FloatingLabelTextEditor.Droid
 
             return layout;
         }
-        protected override void OnMeasure(int widthMeasureSpec, int heightMeasureSpec)
-        {
-            this.SetMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
-        }
-
-        protected override void MeasureChildWithMargins(Android.Views.View child, int parentWidthMeasureSpec, int widthUsed, int parentHeightMeasureSpec, int heightUsed)
-        {
-            base.MeasureChildWithMargins(child, parentWidthMeasureSpec, widthUsed, parentHeightMeasureSpec, heightUsed);
-        }
-
-        protected override void MeasureChild(Android.Views.View child, int parentWidthMeasureSpec, int parentHeightMeasureSpec)
-        {
-            base.MeasureChild(child, parentWidthMeasureSpec, parentHeightMeasureSpec);
-        }
-
-        protected override void MeasureChildren(int widthMeasureSpec, int heightMeasureSpec)
-        {
-            base.MeasureChildren(widthMeasureSpec, heightMeasureSpec);
-        }
-
-        public override void MeasureAndLayout(int p0, int p1, int p2, int p3, int p4, int p5)
-        {
-            base.MeasureAndLayout(p0, p1, p2, p3, p4, p5);
-        }
-
-        protected override void OnLayout(bool changed, int left, int top, int right, int bottom)
-        {
-            base.OnLayout(changed, left, top, right, bottom);
-        }
+      
+      
         private void EditTextOnKeyPress(object sender, KeyEventArgs args)
         {
             args.Handled = args.KeyCode == Keycode.Enter;

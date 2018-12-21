@@ -15,8 +15,6 @@ namespace FloatingLabelTextEditor.iOS
 {
     public class CustomEntryRenderer : ViewRenderer<CustomEntry, FloatLabeledTextField>
     {
-
-        private readonly CGColor _defaultLineColor = Xamarin.Forms.Color.FromHex("#e0e7ec").ToCGColor();
         private readonly CGColor _editingUnderlineColor = UIColor.Blue.CGColor;
         private UIColor _defaultPlaceholderColor = UIColor.Red;
         private UIColor _defaultTextColor;
@@ -35,8 +33,8 @@ namespace FloatingLabelTextEditor.iOS
 
             if (e.NewElement != null)
             {
-                var nativeControl = CreateNativeControl();
-                SetNativeControl(nativeControl);
+                var ctrl = CreateNativeControl();
+                SetNativeControl(ctrl);
 
                 if (!string.IsNullOrWhiteSpace(Element.AutomationId))
                     SetAutomationId(Element.AutomationId);
@@ -55,10 +53,10 @@ namespace FloatingLabelTextEditor.iOS
                 SetFont();
 
                 Control.ErrorTextIsVisible = true;
-                Control.EditingChanged += ViewOnEditingChanged;                
+                Control.EditingChanged += ViewOnEditingChanged;
             }
 
-            if(Control != null && base_entry != null)
+            if (Control != null && base_entry != null)
             {
                 SetReturnType(base_entry);
 
@@ -137,10 +135,11 @@ namespace FloatingLabelTextEditor.iOS
         {
             ElementController?.SetValueFromRenderer(TextProperty, Control.Text);
         }
+
+
         private void SetBackgroundColor()
         {
             NativeView.BackgroundColor = Element.BackgroundColor.ToUIColor();
-            Control.UnderlineColor = _defaultLineColor;
         }
 
         private void SetText()
@@ -213,7 +212,7 @@ namespace FloatingLabelTextEditor.iOS
 
         private void SetKeyboard()
         {
-           //var kbd = Element.Keyboard;//.ToNative();
+            //var kbd = Element.Keyboard;
             //Control.KeyboardType = kbd;
             //Control.InputAccessoryView = kbd == UIKeyboardType.NumberPad ? NumberpadAccessoryView() : null;
             //Control.ShouldReturn = InvokeCompleted;

@@ -11,24 +11,14 @@ namespace FloatingLabelTextEditor.iOS
     {
         private readonly UILabel _errorLabel;
         private readonly UILabel _floatingLabel;
-        private readonly CALayer _underline;
 
         public FloatLabeledTextField()
         {
             _floatingLabel = new UILabel { Alpha = 0.0f };
             _errorLabel = new UILabel { Font = UIFont.SystemFontOfSize(11) };
 
-            _underline = new CALayer
-            {
-                MasksToBounds = true,
-                BorderColor = UIColor.Clear.CGColor,
-                BackgroundColor = UIColor.Clear.CGColor,
-                BorderWidth = 1f
-            };
-
             AddSubview(_errorLabel);
             AddSubview(_floatingLabel);
-            Layer.AddSublayer(_underline);
 
             BorderStyle = UITextBorderStyle.None;
             ErrorTextColor = UIColor.Red;
@@ -57,12 +47,6 @@ namespace FloatingLabelTextEditor.iOS
             {
                 _errorLabel.Hidden = !value;
             }
-        }
-
-        public CGColor UnderlineColor
-        {
-            get { return _underline.BackgroundColor; }
-            set { _underline.BackgroundColor = value; }
         }
 
         public UIFont FloatingLabelFont
@@ -105,46 +89,9 @@ namespace FloatingLabelTextEditor.iOS
             }
         }
 
-        public override CGRect TextRect(CGRect forBounds)
-        {
-            if (_floatingLabel == null)
-            {
-                return base.TextRect(forBounds);
-            }
-            return InsetRect(base.TextRect(forBounds), new UIEdgeInsets(_floatingLabel.Font.LineHeight, 0, 22, 0));
-        }
-
-        public override CGRect EditingRect(CGRect forBounds)
-        {
-            if (_floatingLabel == null)
-            {
-                return base.EditingRect(forBounds);
-            }
-
-            return InsetRect(base.EditingRect(forBounds), new UIEdgeInsets(_floatingLabel.Font.LineHeight, 0, 22, 0));
-        }
-
-        public override CGRect ClearButtonRect(CGRect forBounds)
-        {
-            var rect = base.ClearButtonRect(forBounds);
-
-            if (_floatingLabel == null)
-            {
-                return rect;
-            }
-
-            return new CGRect(
-                rect.X,
-                rect.Y + _floatingLabel.Font.LineHeight / 2.0f,
-                rect.Size.Width,
-                rect.Size.Height);
-        }
-
         public override void LayoutSubviews()
         {
             base.LayoutSubviews();
-
-            _underline.Frame = new CGRect(0f, Frame.Height - 20, Frame.Width, 1f);
 
             Action updateLabel = () =>
             {
@@ -200,13 +147,5 @@ namespace FloatingLabelTextEditor.iOS
             }
         }
 
-        private static CGRect InsetRect(CGRect rect, UIEdgeInsets insets)
-        {
-            return new CGRect(
-                rect.X + insets.Left,
-                rect.Y + insets.Top,
-                rect.Width - insets.Left - insets.Right,
-                rect.Height - insets.Top - insets.Bottom);
-        }
     }
 }
