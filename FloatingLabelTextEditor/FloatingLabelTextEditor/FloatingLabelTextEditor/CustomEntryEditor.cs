@@ -13,7 +13,7 @@ namespace FloatingLabelTextEditor
         public CustomEntryEditor(SfDataForm dataForm) : base(dataForm)
         {
         }
-        protected override CustomEntry OnCreateEditorView()
+        protected override CustomEntry OnCreateEditorView(DataFormItem dataFormItem)
         {
             var customEntry = new CustomEntry();
             customEntry.SfDataForm = DataForm;
